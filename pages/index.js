@@ -50,11 +50,13 @@ const Wrapper = styled.div`
   min-height: 100%;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  padding-bottom: 2.5rem;
 `;
 
 const Posts = styled.div`
   line-height: 1.4;
   flex: 1 0 auto;
+  margin-bottom: 6rem;
   .post {
     margin-top: 3rem;
     text-align: left;
@@ -93,6 +95,11 @@ const Posts = styled.div`
   }
 `;
 
+const PageContainer = styled.div`
+  position: relative;
+  min-height: 100vh;
+`;
+
 export default function Page({ posts }) {
   return (
     <>
@@ -101,31 +108,33 @@ export default function Page({ posts }) {
         <title>Git Solution Log</title>
       </Head>
       <GlobalStyling />
-      <Wrapper>
-        <Header />
-        <main>
-          <Posts>
-            {posts.map((post) => {
-              return (
-                <div className="post" key={post.id}>
-                  <h3 className="ellipsis" key={post.id}>
-                    <a href={post.id}>{post.fields.title}</a>
-                  </h3>
-                  <pre>
-                    {post.fields.terminal.content[0].content.map(
-                      (content_line, index) => {
-                        return <code key={index}>{content_line.value}</code>;
-                      }
-                    )}
-                  </pre>
-                  <p>{post.fields.content.content[0].content[0].value}</p>
-                </div>
-              );
-            })}
-          </Posts>
-        </main>
-      </Wrapper>
-      {/* <Footer /> */}
+      <PageContainer>
+        <Wrapper>
+          <Header />
+          <main>
+            <Posts>
+              {posts.map((post) => {
+                return (
+                  <div className="post" key={post.id}>
+                    <h3 className="ellipsis" key={post.id}>
+                      <a href={post.id}>{post.fields.title}</a>
+                    </h3>
+                    <pre>
+                      {post.fields.terminal.content[0].content.map(
+                        (content_line, index) => {
+                          return <code key={index}>{content_line.value}</code>;
+                        }
+                      )}
+                    </pre>
+                    <p>{post.fields.content.content[0].content[0].value}</p>
+                  </div>
+                );
+              })}
+            </Posts>
+          </main>
+        </Wrapper>
+        <Footer />
+      </PageContainer>
     </>
   );
 }
